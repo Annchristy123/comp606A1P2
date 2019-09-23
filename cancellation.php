@@ -14,11 +14,11 @@
 <body>
 
 <div class="topnav">
-  <a href="#contact">Contact Us</a>
+  <a href="contact.php">Contact Us</a>
+  <a href="about.php">About Me</a>
   <a class="active" href="cancellation.php">Cancel Appoinment</a>
   <a href="appointment.php">Make Appoinment</a>
-  <a href="login.php">Login</a>
-  <a href="#about">About Me</a>
+  <a href="login.php">Sign In</a>
   <a href="home.php">Home</a>
 </div>
 
