@@ -32,8 +32,8 @@
 				<input type="text" placeholder="Enter email" name="email" required>
                 <input type="password" placeholder="Enter Password" name="password" required>
 				<span style="font-size:15px;">Timeslot :</span>
-				<input style="width:350px;" type="datetime-local" name="timeslot" required>
-				<button class="cancel_button" name="cancel" type="submit">Cancel Appointment</button>
+				<input style="width:350px;" type="text" placeholder="eg: Year-month-day Hr:Min" name="timeslot" required>
+				<button class="book_btn" name="cancel" type="submit">Cancel Appointment</button>
 				<p>
 					<!--changes to Sign In page-->
 					Want to make an Appointment? <a href="appointment.php">Book Here</a>
@@ -51,26 +51,44 @@
 				$name=$_POST['name'];
 				$email=$_POST['email'];
 				$timeslot=$_POST['timeslot'];
-		
+				$date = date('Y-m-d H:i:s');
+
 				
-				//$date = date_format('Y-m-d H:i:s',$timeslot);
-				//echo "<script>console.log('$date')</script>";
-				$password=$_POST['password'];
-			    $query="delete from appointments where name='$name' and password='$password'";
-				//echo $query;
-				echo "<script>console.log('$query')</script>";
+				$password=md5($_POST['password']);
+				$query="select * from appointments where name='$name' and password='$password'";
 				$query_run = mysqli_query($db,$query);
 				if($query_run)
 				{
-					$_SESSION['name'] = $name;
-					$_SESSION['success'] = "Your appointment has been cancelled";
-					header( "Location: home.php");				
+					$diff= strtotime($date)-strtotime($timeslot);
+					$query1="delete from appointments where name='$name' and password='$password'";
+					mysqli_query($db,$query1);
+					if($diff>=86400)
+					{
+						$query1="delete from appointments where name='$name' and password='$password'";
+						$query_run1=mysqli_query($db,$query1);
+						if($query_run1)
+						{
+
+							$_SESSION['success'] = "Your appointment has been cancelled and you have been charged a small fee for late cancellation!!!";
+							header( "Location: cancelfinish.php");	
+						}
+					else{
+						$query1="delete from appointments where name='$name' and password='$password'";
+						$query_run1=mysqli_query($db,$query1);
+						if($query_run1)
+						{
+
+						$_SESSION['success'] = "Your appointment has been cancelled!!!";
+						header( "Location: cancelfinish.php");	
+						}
+					}
 				}
+			}
 				else
 				{
-					echo '<script type="text/javascript">alert("Booking Unsuccessful due to server error. Please try later")</script>';
+					echo '<script type="text/javascript">alert("User is unavailable. Please try again!")</script>';
 				}
-				
+			    
             }
 		?>
 		
