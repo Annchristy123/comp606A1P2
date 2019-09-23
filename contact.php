@@ -75,10 +75,7 @@
 <h1>Welcome to Sports Massage Hamilton<h1>
 </div>
 <div>
-<!-- notification message -->
-    <h3>
-    Your appointment has been cancelled!!!
-    </h3>
+
     <h3>Email us: ann@hotmail.co.nz<br> nam@gmail.com</h3>
 
 </div>
